@@ -1,20 +1,25 @@
+const apiRest = axios.create({
+  baseURL: "http://localhost:8081",
+});
+
 function store() {
-  var name = document.getElementById("_usernameReg").value;
-  var pw = document.getElementById("_passwordReg").value;
-  var pw2 = document.getElementById("_repeatPassReg").value;
-  // var email = /^(?=@)/;
-  var lowerCaseLetters = /[a-z]/g;
-  var upperCaseLetters = /[A-Z]/g;
-  var numbers = /[0-9]/g;
-  var simbols = /(?=.*[@!#$%^&*_()])/;
-  var userList = [];
-  if (name.length == 0) {
-    alert("Por favor, preencha o e-mail!", "danger");
-  } else if (!name.match(/\S+@\S+\.\S+/)) {
+  const name = document.getElementById("_usernameReg").value;
+  const email = document.getElementById("_userEmailReg").value;
+  const pw = document.getElementById("_passwordReg").value;
+  const pw2 = document.getElementById("_repeatPassReg").value;
+  // const email = /^(?=@)/;
+  const lowerCaseLetters = /[a-z]/g;
+  const upperCaseLetters = /[A-Z]/g;
+  const numbers = /[0-9]/g;
+  const simbols = /(?=.*[@!#$%^&*_()])/;
+
+  if (name.length == 0 || email.length == 0) {
+    alert("Por favor, preencha nome e e-mail!", "danger");
+  } else if (!email.match(/\S+@\S+\.\S+/)) {
     alert("Preencha o e-mail da forma correta!", "warning");
   } else if (pw.length == 0) {
     alert("Por favor, preencha o password!", "danger");
-  } else if (pw.length < 8) {
+  } else if (pw.length < 4) {
     alert("Min de  8  caracteres!", "warning");
   } else if (!pw.match(numbers)) {
     alert("Por favor add 1 número", "warning");
@@ -27,17 +32,20 @@ function store() {
   } else if (pw != pw2) {
     alert("Senhas não confere!", "danger");
   } else {
-    userList = JSON.parse(localStorage.getItem("userList") || "[]");
-
-    userList.push({
-      user: name,
-      password: pw,
-      myMessages: [],
-    });
-
-    localStorage.setItem("userList", JSON.stringify(userList));
-    alert("Sua conta foi criada!", "success");
-    window.location.href = "index.html";
+    apiRest
+      .post("/cadastro", {
+        name: name,
+        email: email,
+        password: pw,
+        reppeatPassword: pw2,
+      })
+      .then((result) => {
+        console.log(result);
+        // window.location.href = "index.html";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
 
