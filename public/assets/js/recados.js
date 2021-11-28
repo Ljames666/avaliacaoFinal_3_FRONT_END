@@ -11,13 +11,24 @@ if (localStorage.getItem("token") == null) {
 
 function sair() {
   //get logoff
-  localStorage.removeItem("token");
-  localStorage.removeItem("userLogon");
-  localStorage.removeItem("messages");
-  localStorage.removeItem("idMsg");
-  window.location.href = "index.html";
+  apiRest
+    .get("/logout")
+    .then((result) => {
+      console.log(result.data.token);
+      localStorage.removeItem("token");
+      localStorage.removeItem("userLogon");
+      localStorage.removeItem("messages");
+      localStorage.removeItem("idMsg");
+      alert("Saindo", "danger");
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
-
+let token = localStorage.getItem("token");
 let btnSend = document.querySelector("#_sendMensseger");
 btnSend.addEventListener("click", createMessage);
 
@@ -26,10 +37,18 @@ function createMessage() {
   let inputDetails = document.getElementById("_descrition").value;
   let id = localStorage.getItem("userLogon");
   apiRest
-    .post(`/messages/${id}`, {
-      description: inputDescription,
-      details: inputDetails,
-    })
+    .post(
+      `/messages/${id}`,
+      {
+        description: inputDescription,
+        details: inputDetails,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    )
     .then((result) => {
       console.log(result.data);
       readMessage();
@@ -46,7 +65,11 @@ function readMessage() {
   // get
   let id = localStorage.getItem("userLogon");
   apiRest
-    .get(`/messages/${id}`)
+    .get(`/messages/${id}`, {
+      headers: {
+        authorization: token,
+      },
+    })
     .then((result) => {
       console.log(result.data.messages);
       let myMessages = result.data.messages;
@@ -94,10 +117,18 @@ function updateMessage() {
   messages.forEach((obj) => {
     if (des.textContent == obj.description && det.textContent == obj.details) {
       apiRest
-        .put(`/messages/${id}?message=${message}`, {
-          description: descEdit,
-          details: detalEdit,
-        })
+        .put(
+          `/messages/${id}?message=${message}`,
+          {
+            description: descEdit,
+            details: detalEdit,
+          },
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        )
         .then((result) => {
           alert(result.data.message, "success");
           readMessage();
@@ -115,7 +146,11 @@ function deleteMessage() {
   let id = localStorage.getItem("userLogon");
 
   apiRest
-    .delete(`/messages/${id}?message=${message}`)
+    .delete(`/messages/${id}?message=${message}`, {
+      headers: {
+        authorization: token,
+      },
+    })
     .then((result) => {
       console.log(result.data);
       alert(result.data.message, "success");
