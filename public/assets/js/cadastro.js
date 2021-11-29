@@ -43,9 +43,9 @@ function store() {
       })
       .then((result) => {
         console.log(result);
-        // setTimeout(() => {
-        //   window.location.href = "index.html";
-        // }, 1000);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
