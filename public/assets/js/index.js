@@ -1,5 +1,5 @@
 const apiRest = axios.create({
-  baseURL: "http://localhost:8081",
+  baseURL: "https://my-messages-apirest.herokuapp.com",
 });
 
 let btnAccess = document.querySelector("#_acessValid");

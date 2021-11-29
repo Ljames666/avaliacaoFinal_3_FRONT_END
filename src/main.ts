@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-const port: number = 8082;
+const port = process.env.PORT || 8082;
 
 app.use(express.static(__dirname + "/../public"));
 
