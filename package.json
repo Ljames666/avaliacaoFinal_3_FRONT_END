@@ -20,5 +20,13 @@
   },
   "author": "Jamerson Paz",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ljames666/avaliacaoFinal_3_FRONT_END.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ljames666/avaliacaoFinal_3_FRONT_END/issues"
+  },
+  "homepage": "https://github.com/Ljames666/avaliacaoFinal_3_FRONT_END#readme"
 }
