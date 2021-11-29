@@ -52,13 +52,12 @@ function createMessage() {
     .then((result) => {
       console.log(result.data);
       readMessage();
+      inputDescription = location.reload();
+      inputDetails = location.reload();
     })
     .catch((err) => {
       console.log(err);
     });
-
-  inputDescription = location.reload();
-  inputDetails = location.reload();
 }
 
 function readMessage() {
