@@ -11,7 +11,7 @@ function check() {
 
   apiRest
     .post("/login", {
-      name: userName,
+      username: userName,
       password: userPw,
     })
     .then((result) => {
