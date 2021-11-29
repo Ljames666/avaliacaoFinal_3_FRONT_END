@@ -93,17 +93,30 @@
             class="row d-flex flex-column justify-content-start align-items-start gy-3"
           >
             <div class="col-6">
-              <label class="visually-hidden" for="_usernameReg">Name</label>
+              <label class="visually-hidden" for="_nameReg">Name</label>
+
+              <input
+                type="text"
+                class="form-control"
+                id="_nameReg"
+                placeholder="Name"
+                data-bs-toggle="popover"
+                data-bs-trigger="focus"
+                title="Digite seu nome"
+                data-bs-content="Preencha seu nome completo!"
+              />
+              <br />
+              <label class="visually-hidden" for="_usernameReg">Username</label>
 
               <input
                 type="text"
                 class="form-control"
                 id="_usernameReg"
-                placeholder="Nome"
+                placeholder="Username"
                 data-bs-toggle="popover"
                 data-bs-trigger="focus"
-                title="Digite seu nome"
-                data-bs-content="Preencha seu nome completo"
+                title="Digite seu Username"
+                data-bs-content="Preencha seu nome de usuário!"
               />
               <br />
               <label class="visually-hidden" for="_userEmailReg">Email</label>

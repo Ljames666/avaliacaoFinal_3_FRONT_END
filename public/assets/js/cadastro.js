@@ -3,7 +3,8 @@ const apiRest = axios.create({
 });
 
 function store() {
-  const name = document.getElementById("_usernameReg").value;
+  const name = document.getElementById("_nameReg").value;
+  const username = document.getElementById("_usernameReg").value;
   const email = document.getElementById("_userEmailReg").value;
   const pw = document.getElementById("_passwordReg").value;
   const pw2 = document.getElementById("_repeatPassReg").value;
@@ -13,13 +14,13 @@ function store() {
   const numbers = /[0-9]/g;
   const simbols = /(?=.*[@!#$%^&*_()])/;
 
-  if (name.length == 0 || email.length == 0) {
+  if (name.length == 0 || username.length == 0 || email.length == 0) {
     alert("Por favor, preencha nome e e-mail!", "danger");
   } else if (!email.match(/\S+@\S+\.\S+/)) {
     alert("Preencha o e-mail da forma correta!", "warning");
   } else if (pw.length == 0) {
     alert("Por favor, preencha o password!", "danger");
-  } else if (pw.length < 4) {
+  } else if (pw.length < 8) {
     alert("Min de  8  caracteres!", "warning");
   } else if (!pw.match(numbers)) {
     alert("Por favor add 1 número", "warning");
@@ -35,18 +36,20 @@ function store() {
     apiRest
       .post("/cadastro", {
         name: name,
+        username: username,
         email: email,
         password: pw,
         reppeatPassword: pw2,
       })
       .then((result) => {
         console.log(result);
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.href = "index.html";
+        // }, 1000);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
+        alert("Username already exists, please choose another one!", "danger");
       });
   }
 }
