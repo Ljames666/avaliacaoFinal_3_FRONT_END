@@ -1,7 +1,3 @@
-const apiRest = axios.create({
-  baseURL: "https://my-messages-apirest.herokuapp.com",
-});
-
 let btnAccess = document.querySelector("#_acessValid");
 btnAccess.addEventListener("click", check);
 //checking
@@ -11,53 +7,41 @@ function check() {
 
   apiRest
     .post("/login", {
-      username: userName,
-      password: userPw,
+      _username: userName,
+      _password: userPw,
     })
     .then((result) => {
-      alert("You are logged in!", "success");
-      localStorage.setItem("token", result.data.token);
-      localStorage.setItem("userLogon", result.data.userLogon.id);
+      alertBootstrap("You are logged in!", "success");
+      console.log(result.data.result);
+      localStorage.setItem("token", result.data.result.token);
+      localStorage.setItem("userLogon", result.data.result.user_id);
       setTimeout(() => {
         window.location.href = "recados.html";
       }, 3000);
     })
     .catch((err) => {
+      console.log(err);
       let myError = err.response.status;
       switch (myError) {
         case 418:
-          alert("Preencha os campos!", "warning");
+          alertBootstrap("Preencha os campos!", "warning");
           break;
         case 400:
-          alert("Password invalid !", "danger");
+          alertBootstrap("Password invalid !", "danger");
           break;
         case 406:
-          alert("Username invalid!", "danger");
+          alertBootstrap("Username invalid!", "danger");
           break;
         case 404:
-          alert("Usuário inexistente !", "danger");
+          alertBootstrap("Usuário inexistente !", "danger");
           setTimeout(() => {
             window.location.href = "cadastro.html";
           }, 2000);
           break;
 
         default:
-          alert("Erro de login,tente novamente!", "danger");
+          alertBootstrap("Erro de login,tente novamente!", "danger");
           break;
       }
     });
-}
-
-var alertPlaceholder = document.getElementById("liveAlertPlaceholder");
-
-function alert(message, type) {
-  var wrapper = document.createElement("div");
-  wrapper.innerHTML +=
-    '<div class="alert alert-' +
-    type +
-    ' alert-dismissible" role="alert">' +
-    message +
-    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-
-  alertPlaceholder.appendChild(wrapper);
 }
