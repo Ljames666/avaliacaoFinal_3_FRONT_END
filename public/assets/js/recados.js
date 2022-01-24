@@ -7,7 +7,7 @@ if (localStorage.getItem("token") == null) {
 let token = localStorage.getItem("token");
 function sair() {
   apiRest
-    .delete(`/logout/${token}`)
+    .delete(`/logoff/${token}`)
     .then((result) => {
       console.log(result.data.token);
       localStorage.removeItem("token");
@@ -34,10 +34,18 @@ function createMessage() {
   let inputDetails = document.getElementById("_descrition").value;
   let id = localStorage.getItem("userLogon");
   apiRest
-    .post(`/messages/${id}`, {
-      description: inputDescription,
-      details: inputDetails,
-    })
+    .post(
+      `/messages/${id}`,
+      {
+        description: inputDescription,
+        details: inputDetails,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    )
     .then((result) => {
       alertBootstrap(result.data.message, "success");
       readMessage();
@@ -53,7 +61,11 @@ function readMessage() {
   // get
   let id = localStorage.getItem("userLogon");
   apiRest
-    .get(`/messages/${id}`)
+    .get(`/messages/${id}`, {
+      headers: {
+        authorization: token,
+      },
+    })
     .then((result) => {
       console.log(result.data);
       let myMessages = result.data;
@@ -92,10 +104,18 @@ function updateMessage() {
   let detalEdit = document.getElementById("detalEdit").value;
 
   apiRest
-    .put(`/messages/${id}`, {
-      description: descEdit,
-      details: detalEdit,
-    })
+    .put(
+      `/messages/${id}`,
+      {
+        description: descEdit,
+        details: detalEdit,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    )
     .then((result) => {
       alertBootstrap(result.data.message, "success");
       readMessage();
@@ -110,7 +130,11 @@ function deleteMessage() {
   let id = localStorage.getItem("idMsg");
 
   apiRest
-    .delete(`/messages/${id}`)
+    .delete(`/messages/${id}`, {
+      headers: {
+        authorization: token,
+      },
+    })
     .then((result) => {
       console.log(result);
       alertBootstrap("message deleted successfully", "success");

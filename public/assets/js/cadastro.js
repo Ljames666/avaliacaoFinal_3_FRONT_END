@@ -35,6 +35,7 @@ function store() {
         username: username,
         email: email,
         password: pw,
+        reppeatPassword: pw2,
       })
       .then((result) => {
         console.log(result);

@@ -7,17 +7,17 @@ function check() {
 
   apiRest
     .post("/login", {
-      _username: userName,
-      _password: userPw,
+      username: userName,
+      password: userPw,
     })
     .then((result) => {
       alertBootstrap("You are logged in!", "success");
-      console.log(result.data.result);
-      localStorage.setItem("token", result.data.result.token);
-      localStorage.setItem("userLogon", result.data.result.user_id);
+
+      localStorage.setItem("token", result.data.id);
+      localStorage.setItem("userLogon", result.data.user_id);
       setTimeout(() => {
         window.location.href = "recados.html";
-      }, 3000);
+      }, 2000);
     })
     .catch((err) => {
       console.log(err);
