@@ -7,7 +7,7 @@ if (localStorage.getItem("token") == null) {
 let token = localStorage.getItem("token");
 function sair() {
   apiRest
-    .delete(`/logoff/${token}`)
+    .delete(`/login/${token}`)
     .then((result) => {
       console.log(result.data.token);
       localStorage.removeItem("token");
@@ -47,6 +47,7 @@ function createMessage() {
       }
     )
     .then((result) => {
+      console.log(result);
       alertBootstrap(result.data.message, "success");
       readMessage();
       inputDescription = location.reload();
@@ -87,7 +88,7 @@ function readMessage() {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.message);
     });
 }
 function captureMessage(id) {
@@ -136,7 +137,6 @@ function deleteMessage() {
       },
     })
     .then((result) => {
-      console.log(result);
       alertBootstrap("message deleted successfully", "success");
 
       readMessage();
